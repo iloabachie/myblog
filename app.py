@@ -9,18 +9,11 @@ app = Flask(__name__)
 # Create a route decorator
 @app.route('/')
 def index():
-    return '<details> \
-        <summary>hello world</summary> \
-        <p>hi</> \
-        </details> \
-        <details> \
-        <summary>hello world</summary> \
-        <p>hi</> \
-        </details> \
-        <details> \
-        <summary>hello world</summary> \
-        <p>hi</> \
-        </details>'
+    return render_template('index.html')
+
+@app.route('/user/<name>')
+def user(name):
+    return render_template('index.html', name=name)
 
 
 
