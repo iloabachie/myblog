@@ -9,12 +9,12 @@ app = Flask(__name__)
 # Create a route decorator
 @app.route('/')
 def index():
-    return render_template('index.html')
+    pizza = ['asss', 'bdddd', 'cffff', 'dggggg']
+    return render_template('index.html', pizza=pizza)
 
 @app.route('/user/<name>')
 def user(name):
-    return render_template('index.html', name=name)
-
+    return render_template('user.html', name=name)
 
 
 if __name__ == "__main__":
