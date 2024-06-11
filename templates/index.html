@@ -1,20 +1,26 @@
+{% extends 'base.html' %}
 
-<details> 
-    <summary>hello world</summary> 
-    <p>hi hello</p> 
-</details> 
-<details> 
-    <summary>hello world</summary> 
-    <p>hi hello</p> 
-</details> 
-<details> 
-    <summary>hello world</summary> 
-    <p>hi hello hello</p>
-</details>
 
-{{ pizza }}<br>
-{{ pizza.2 }}<br>
-{% for item in pizza|reverse %}
-    {{ item|reverse }}<br>
-{% endfor %}
 
+{% block content %}
+
+    <details> 
+        <summary>hello world</summary> 
+        <p>hi hello</p> 
+    </details> 
+    <details> 
+        <summary>hello world</summary> 
+        <p>hi hello</p> 
+    </details> 
+    <details> 
+        <summary>hello world</summary> 
+        <p>hi hello hello</p>
+    </details>
+
+    {{ pizza }}<br>
+    {{ pizza.2 }}<br>
+    {% for item in pizza|reverse %}
+        {{ item|reverse }}<br>
+    {% endfor %}
+
+{% endblock %}
