@@ -1,7 +1,6 @@
 from os import getenv
-from flask import Flask, render_template
+from flask import Flask, render_template, flash
 from secrets import token_urlsafe
-# from flask_bootstrap import Bootstrap5
 from flask_wtf import CSRFProtect, FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -9,18 +8,13 @@ from wtforms.validators import DataRequired
 # Create a Flask Instance
 app = Flask(__name__)
 
-foo = token_urlsafe(16)
-app.secret_key = foo
+app.secret_key = token_urlsafe(16)
 
-# bootstrap = Bootstrap5(app)
 csrf = CSRFProtect(app)
 
-# app.config['SECRET_KEY'] = foo 
 class NamerForm(FlaskForm):
     name = StringField('What is your name', validators=[DataRequired()])
     submit = SubmitField('Submit')
-
-
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -47,6 +41,7 @@ def name():
     if form.validate_on_submit():
         name = form.name.data
         form.name.data = ''
+        flash("Form Submitted Successfully!!!")
     return render_template('name.html', name=name, form=form)
 
 
