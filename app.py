@@ -1,12 +1,26 @@
 from os import getenv
-from flask import Flask, render_template, flash
+from flask import Flask, render_template, flash, request
 from secrets import token_urlsafe
 from flask_wtf import CSRFProtect, FlaskForm
 from wtforms import StringField, SubmitField, HiddenField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import mysql.connector
 
+# create MySQL database
+def create_and_verify_db(db_name, user='root', host='localhost', passwd="P@s$w0rd1$"):
+    mydb = mysql.connector.connect(host=host, user=user, passwd=passwd)
+    my_cursor = mydb.cursor()    
+    my_cursor.execute("SHOW DATABASES")
+    for db in my_cursor:
+        print(db)
+        if db == db_name:
+            break
+    else:
+        my_cursor.execute(f"CREATE DATABASE {db_name}")        
+
+# create_and_verify_db('mysqlusers')
 
 # Create a Flask Instance
 app = Flask(__name__)
@@ -15,6 +29,7 @@ app.secret_key = "qwerty" #token_urlsafe(16)
 csrf = CSRFProtect(app)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:P@s$w0rd1$@localhost/mysqlusers"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -84,13 +99,25 @@ def add_user():
             db.session.add(user)
             db.session.commit()
             name = form.name.data
-            user_list = Users.query.order_by(Users.date_added)  
+            # user_list = Users.query.order_by(Users.date_added)  
             flash("User added successfully!!!")  
         else:
             user_exists = True
         form.name.data = ''
         form.email.data = ''  
-    return render_template('add_user.html', name=name, form=form, user_list=user_list, user_exists=user_exists)
+    user_list = Users.query.order_by(Users.date_added)
+    print(type(user_list))
+    all_users = []
+    for user in user_list:
+        all_users.append(user)
+    page = request.args.get('page', 1, type=int)
+    per_page = 5
+    start = (page - 1) * per_page
+    end = start + per_page
+    total_pages = (len(all_users) + per_page - 1) // per_page
+    items_on_page = all_users[start:end]
+        
+    return render_template('add_user.html', name=name, form=form, user_list=user_list, user_exists=user_exists, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
 
 
 
@@ -103,4 +130,5 @@ if __name__ == "__main__":
     if getenv('FLASK_ENV') == 'development':
         app.run(debug=True) # for dev testing
     else:
-        app.run() # For production
+        app.run(host='0.0.0.0', port=5000) # For production
+        
