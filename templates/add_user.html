@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+    {% endfor %}
+
+    {% if user_exists %}
+        <h3>User already exists in database</h3>
+    {% elif name %}
+        <h1>Hello {{ name|title }}</h1>
+        <br/>
+        <table class="table table-hover table-bordered table-striped">
+            <thead>
+                <td>ID</td><td>Name</td><td>Email</td>
+            </thead>
+            <tbody>
+        {% for user in user_list %}
+            <tr>
+                <td>{{ user.id }}</td><td>{{ user.name }}</td><td>{{ user.email }}</td>  
+            </tr> 
+        {% endfor %}
+            </tbody>
+        </table>
+        
+    {% else %}
+        <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+        <h2>Add User</h2>
+        <br/>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control") }}
+            <br/>
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control") }}
+            <br/>
+            {{ form.submit(class="btn btn-secondary") }}
+        </form>
+        </div>
+        <br/>
+    {% endif %}
+
+
+{% endblock %}
