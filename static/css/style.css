@@ -4,10 +4,10 @@ h1 {
 }
 
 body {
-    background: #976f6f;
+    background: #a2c5b7;
 }
 
 #demo {
     font-size: 18px;
-    color: red
+    color: rgb(146, 52, 52)
 }
