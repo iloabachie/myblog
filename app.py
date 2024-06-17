@@ -144,7 +144,7 @@ def update(id):
             db.session.commit()
             print("did you run?")
             flash("User updated successfully")
-            render_template('add_user.html', name=None, user_exists=None, form=form, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
+            return render_template('add_user.html', name=None, user_exists=None, form=form, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
         except:
             print('error in rendering when update failed')
             # if error not tested
