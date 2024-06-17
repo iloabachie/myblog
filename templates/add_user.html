@@ -10,13 +10,15 @@
         
     {% endfor %}
 
+    <h2>Blog Add User Page</h2>
+
     {% if user_exists %}
         <h3>User already exists in database</h3>
     {% elif name %}
         <h1>Hello {{ name|title }}</h1>        
     {% else %}
         <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
-        <h2>Add User</h2>
+        <h3>Add User</h3>
         <br/>
         <form method="POST">
             {{ form.hidden_tag() }}
@@ -51,12 +53,12 @@
     <br/>
     <table class="table table-hover table-bordered table-striped">
         <thead>
-            <td>ID</td><td>Name</td><td>Email</td><td>Date added</td>
+            <td><strong>ID</strong></td><td><strong>Name</strong></td><td><strong>Email</strong></td><td><strong>Date added</strong></td>
         </thead>
         <tbody>
     {% for item in items_on_page %}
         <tr>
-            <td>{{ item.id }}</td><td>{{ item.name }}</td><td>{{ item.email }}</td><td>{{ item.date_added }}</td>
+            <td>{{ item.id }}</td><td><a href="{{ url_for('update', id=item.id) }}">{{ item.name }}</a></td><td>{{ item.email }}</td><td>{{ item.date_added }}</td>
         </tr> 
     {% endfor %}
         </tbody>

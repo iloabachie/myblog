@@ -24,6 +24,8 @@
             {{ form.name.label(class="form-label") }}
             {{ form.name(class="form-control") }}
             <br/>
+            {{ form.email(class="form-control", value="default@example.com", hidden=True) }}
+            <br/>
             {{ form.submit(class="btn btn-secondary") }}
     {% endif %}
     <p id='demo'>this is stuff before javascript</p>

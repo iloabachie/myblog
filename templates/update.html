@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>        
+    {% endfor %}
+
+    <h3>To update {{ name_to_update.name }}, fill in correct details:</h3>        
+    <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+    <h3>Update User</h3>
+    <br/>
+    <form action="/update/{{ name_to_update.id }}" method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.name.label(class="form-label") }}
+        {{ form.name(class="form-control", value=name_to_update.name) }}
+        <br/>
+        {{ form.email.label(class="form-label") }}
+        {{ form.email(class="form-control", value=name_to_update.email) }}
+        <br/>
+        {{ form.submit(class="btn btn-secondary") }}
+    </form>
+    </div>
+   
+    
+    <br/>
+    <table class="table table-hover table-bordered table-striped">
+        <thead>
+            <td><strong>ID</strong></td><td><strong>Name</strong></td><td><strong>Email</strong></td><td><strong>Date added</strong></td>
+        </thead>
+        <tbody>
+    {% for item in items_on_page %}
+        <tr>
+            <td>{{ item.id }}</td><td><a href="{{ url_for('update', id=item.id) }}">{{ item.name }}</a></td><td>{{ item.email }}</td><td>{{ item.date_added }}</td>
+        </tr> 
+    {% endfor %}
+        </tbody>
+    </table>
+    {% if page > 1 %}
+        <a href="{{ url_for('add_user', page=page-1) }}"><< Previous</a> |
+    {% endif %}
+    <span> Page {{ page }} of {{ total_pages }}</span>
+    {% if page < total_pages %}
+        | <a href="{{ url_for('add_user', page=page+1) }}">Next >></a>
+    {% endif %}
+
+{% endblock %}

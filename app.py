@@ -57,7 +57,7 @@ if __name__ == '__main__':
 
 class NamerForm(FlaskForm):
     name = StringField('What is your name', validators=[DataRequired()])
-    email = StringField('What is your email', validators=[DataRequired()], default='default@example.com')
+    email = StringField('What is your email', validators=[DataRequired()])
     hidden_field = HiddenField('Hidden Field')
     submit = SubmitField('Submit')
 
@@ -109,7 +109,6 @@ def add_user():
         form.name.data = ''
         form.email.data = ''  
     user_list = Users.query.order_by(Users.date_added)
-    print(type(user_list))
     all_users = []
     for user in user_list:
         all_users.append(user)
@@ -123,6 +122,38 @@ def add_user():
     return render_template('add_user.html', name=name, form=form, user_list=user_list, user_exists=user_exists, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
 
 
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    user_list = Users.query.order_by(Users.date_added)
+    all_users = []
+    for user in user_list:
+        all_users.append(user)
+    page = request.args.get('page', 1, type=int)
+    per_page = 5
+    start = (page - 1) * per_page
+    end = start + per_page
+    total_pages = (len(all_users) + per_page - 1) // per_page
+    items_on_page = all_users[start:end]
+        
+    form = NamerForm()
+    name_to_update = Users.query.get_or_404(id)
+    if request.method == 'POST':
+        name_to_update.name = request.form['name']
+        name_to_update.email = request.form['email']
+        try:
+            db.session.commit()
+            print("did you run?")
+            flash("User updated successfully")
+            render_template('add_user.html', name=None, user_exists=None, form=form, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
+        except:
+            print('error in rendering when update failed')
+            # if error not tested
+            flash("Error in update. Try again")
+            return render_template("update.html", form=form, name_to_update=name_to_update, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
+    else:
+        # OK
+        print('page to render once route called via link')
+        return render_template("update.html", form=form, name_to_update=name_to_update, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
 
 
 
