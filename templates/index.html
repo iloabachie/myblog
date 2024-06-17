@@ -12,10 +12,8 @@
         <summary>hello world</summary> 
         <p>hi hello</p> 
     </details> 
-    <details> 
-        <summary>hello world</summary> 
-        <p>hi hello hello</p>
-    </details>
+    <summary>hello world</summary> 
+    <p><a href="{{ url_for('index', content=300) }}">hi hello hello</a></p>
 
     {{ pizza }}<br>
     {{ pizza.2 }}<br>

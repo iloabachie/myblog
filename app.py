@@ -7,20 +7,22 @@ from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import mysql.connector
+import sys
+sys.path.insert(0, "D:/Documents/Python lessons/myblog/venv/Lib/site-packages") # identify location of pymysql
+
 
 # create MySQL database
-def create_and_verify_db(db_name, user='root', host='localhost', passwd="P@s$w0rd1$"):
-    mydb = mysql.connector.connect(host=host, user=user, passwd=passwd)
+def create_and_verify_db(db_name, user='root', host='localhost', passwd="P@s$w0rd1$", port=3306):
+    mydb = mysql.connector.connect(host=host, user=user, passwd=passwd, port=port)
     my_cursor = mydb.cursor()    
     my_cursor.execute("SHOW DATABASES")
     for db in my_cursor:
-        print(db)
-        if db == db_name:
+        if db[0] == db_name:
             break
     else:
         my_cursor.execute(f"CREATE DATABASE {db_name}")        
 
-# create_and_verify_db('mysqlusers')
+create_and_verify_db('users_database', port=3307)
 
 # Create a Flask Instance
 app = Flask(__name__)
@@ -28,8 +30,9 @@ app = Flask(__name__)
 app.secret_key = "qwerty" #token_urlsafe(16)
 csrf = CSRFProtect(app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
-# app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:P@s$w0rd1$@localhost/mysqlusers"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:P%40s$w0rd1$@localhost:3307/users_database"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+mysqlclient://root:P%40s$w0rd1$@localhost:3307/users_database"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -118,9 +121,6 @@ def add_user():
     items_on_page = all_users[start:end]
         
     return render_template('add_user.html', name=name, form=form, user_list=user_list, user_exists=user_exists, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
-
-
-
 
 
 
