@@ -3,7 +3,7 @@
 {% block content %}
 
     {% for message in get_flashed_messages() %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>        
@@ -21,6 +21,9 @@
         {{ form.email.label(class="form-label") }}
         {{ form.email(class="form-control", value=name_to_update.email) }}
         <br/>
+        {{ form.location.label(class="form-label") }}
+        {{ form.location(class="form-control", value=name_to_update.location) }}
+        <br/>
         {{ form.submit(class="btn btn-secondary") }}
     </form>
     </div>
@@ -29,12 +32,12 @@
     <br/>
     <table class="table table-hover table-bordered table-striped">
         <thead>
-            <td><strong>ID</strong></td><td><strong>Name</strong></td><td><strong>Email</strong></td><td><strong>Date added</strong></td>
+            <td><strong>ID</strong></td><td><strong>Name</strong></td><td><strong>Email</strong></td><td><strong>Location</strong></td><td><strong>Date added</strong></td>
         </thead>
         <tbody>
     {% for item in items_on_page %}
         <tr>
-            <td>{{ item.id }}</td><td><a href="{{ url_for('update', id=item.id) }}">{{ item.name }}</a></td><td>{{ item.email }}</td><td>{{ item.date_added }}</td>
+            <td>{{ item.id }}</td><td><a href="{{ url_for('update', id=item.id) }}">{{ item.name }}</a></td><td>{{ item.email }}</td><td>{{ item.location }}</td><td>{{ item.date_added }}</td>
         </tr> 
     {% endfor %}
         </tbody>

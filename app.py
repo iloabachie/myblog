@@ -5,10 +5,9 @@ from flask_wtf import CSRFProtect, FlaskForm
 from wtforms import StringField, SubmitField, HiddenField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from flask_migrate import Migrate
+from datetime import datetime, date
 import mysql.connector
-import sys
-sys.path.insert(0, "D:/Documents/Python lessons/myblog/venv/Lib/site-packages") # identify location of pymysql
 
 
 # create MySQL database
@@ -32,16 +31,17 @@ csrf = CSRFProtect(app)
 
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:P%40s$w0rd1$@localhost:3307/users_database"
-# app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+mysqlclient://root:P%40s$w0rd1$@localhost:3307/users_database"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
+    location = db.Column(db.String(120))
     
     def __repr__(self):
         return f'{self.name}'
@@ -59,6 +59,7 @@ class NamerForm(FlaskForm):
     name = StringField('What is your name', validators=[DataRequired()])
     email = StringField('What is your email', validators=[DataRequired()])
     hidden_field = HiddenField('Hidden Field')
+    location = StringField('What is your location')
     submit = SubmitField('Submit')
 
 @app.errorhandler(404)
@@ -68,6 +69,12 @@ def page_not_found(e):
 @app.errorhandler(500)
 def server_error(e):
     return render_template('500.html'), 500
+
+@app.context_processor
+def inject_defaults():
+    default_year = date.today()
+    company_name = "MyBlog"
+    return dict(default_year=default_year, company_name=company_name)
 
 # Create a route decorator
 @app.route('/')
@@ -98,7 +105,7 @@ def add_user():
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
         if user is None:
-            user = Users(name=form.name.data, email=form.email.data)
+            user = Users(name=form.name.data, email=form.email.data, location=form.location.data)
             db.session.add(user)
             db.session.commit()
             name = form.name.data
@@ -108,6 +115,7 @@ def add_user():
             user_exists = True
         form.name.data = ''
         form.email.data = ''  
+        form.location.data = ''  
     user_list = Users.query.order_by(Users.date_added)
     all_users = []
     for user in user_list:
@@ -140,18 +148,19 @@ def update(id):
     if request.method == 'POST':
         name_to_update.name = request.form['name']
         name_to_update.email = request.form['email']
+        name_to_update.location = request.form['location']
         try:
             db.session.commit()
-            print("did you run?")
             flash("User updated successfully")
+            form.name.data = ''
+            form.email.data = '' 
+            form.location.data = '' 
             return render_template('add_user.html', name=None, user_exists=None, form=form, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
         except:
             print('error in rendering when update failed')
-            # if error not tested
             flash("Error in update. Try again")
             return render_template("update.html", form=form, name_to_update=name_to_update, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
     else:
-        # OK
         print('page to render once route called via link')
         return render_template("update.html", form=form, name_to_update=name_to_update, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
 
