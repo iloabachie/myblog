@@ -1,38 +1,26 @@
 {% extends 'base.html' %}
 
-
-
 {% block content %}
 
-    <details> 
-        <summary>hello world</summary> 
-        <p>hi hello</p> 
-    </details> 
-    <details> 
-        <summary>hello world</summary> 
-        <p>hi hello</p> 
-    </details> 
+<details> 
     <summary>hello world</summary> 
-    <p><a href="{{ url_for('index', content=300) }}">hi hello hello</a></p>
-
-    
-
-
-    {{ pizza }}<br>
-    {{ pizza.2 }}<br>
-    {% for item in pizza|reverse %}
-        {{ item|reverse }}<br>
-    {% endfor %}
+    <p>hi hello</p> 
+</details> 
+<details> 
+    <summary>hello world</summary> 
+    <p>hi hello</p> 
+</details> 
+<summary>hello world</summary> 
+<p><a href="{{ url_for('index', content=300) }}">Test link</a></p>
 
 
-    <br/>
-    <h4>Static Projects</h4>
-    
-    <a href="https://udemezue.w3spaces.com/">Udemezue</a>
-    <br/>
-    <a href="https://udemezue.w3spaces.com/tictactoe/index.html">Tic Tac Toe</a>
-    <br/>
-    <a href="https://udemezue.w3spaces.com/magnolia/index.html">Health Clinic</a>
-    <br/>
-    <br/>
+{{ pizza }}<br>
+{{ pizza.2 }}<br>
+{% for item in pizza|reverse %}
+    {{ item|reverse }}<br>
+{% endfor %}
+
+<br/>
+
+
 {% endblock %}

@@ -11,7 +11,7 @@ import mysql.connector
 
 
 # create MySQL database
-def create_and_verify_db(db_name, user='root', host='localhost', passwd="P@s$w0rd1$", port=3306):
+def create_and_verify_db(db_name, user='root', host='localhost', passwd="3984", port=3306):
     mydb = mysql.connector.connect(host=host, user=user, passwd=passwd, port=port)
     my_cursor = mydb.cursor()    
     my_cursor.execute("SHOW DATABASES")
@@ -30,7 +30,7 @@ app.secret_key = "qwerty" #token_urlsafe(16)
 csrf = CSRFProtect(app)
 
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:P%40s$w0rd1$@localhost:3307/users_database"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:3984@localhost:3307/users_database"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -109,8 +109,8 @@ def add_user():
             db.session.add(user)
             db.session.commit()
             name = form.name.data
-            # user_list = Users.query.order_by(Users.date_added)  
-            flash("User added successfully!!!")  
+            # user_list = Users.query.order_by(Users.date_added)
+            flash("User added successfully!!!")
         else:
             user_exists = True
         form.name.data = ''
@@ -156,15 +156,15 @@ def update(id):
             form.email.data = '' 
             form.location.data = '' 
             return render_template('add_user.html', name=None, user_exists=None, form=form, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
-        except:
-            print('error in rendering when update failed')
+        except Exception as e:
             flash("Error in update. Try again")
             return render_template("update.html", form=form, name_to_update=name_to_update, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
     else:
-        print('page to render once route called via link')
         return render_template("update.html", form=form, name_to_update=name_to_update, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
 
-
+@app.route('/delete/<int:id>')
+def delete(id):
+    user_to_delete=Users.query.get_or_404(id)
 
 if __name__ == "__main__":
     if getenv('FLASK_ENV') == 'development':
