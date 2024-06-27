@@ -1,5 +1,5 @@
 from os import getenv
-from flask import Flask, render_template, flash, request
+from flask import Flask, render_template, flash, request, redirect, send_from_directory
 from secrets import token_urlsafe
 from flask_wtf import CSRFProtect, FlaskForm
 from wtforms import StringField, SubmitField, HiddenField
@@ -8,10 +8,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime, date
 import mysql.connector
+from trading.trade_analysis import trade_analysis
 
 
 # create MySQL database
-def create_and_verify_db(db_name, user='root', host='localhost', passwd="3984", port=3306):
+# def create_and_verify_db(db_name, user='root', host='localhost', passwd="3984", port=3306):
+def create_and_verify_db(db_name, user='remote', host='192.168.0.25', passwd="Password1#", port=3306):
     mydb = mysql.connector.connect(host=host, user=user, passwd=passwd, port=port)
     my_cursor = mydb.cursor()    
     my_cursor.execute("SHOW DATABASES")
@@ -21,7 +23,8 @@ def create_and_verify_db(db_name, user='root', host='localhost', passwd="3984", 
     else:
         my_cursor.execute(f"CREATE DATABASE {db_name}")        
 
-create_and_verify_db('users_database', port=3307)
+# create_and_verify_db('users_database', port=3307)
+create_and_verify_db('user_database')
 
 # Create a Flask Instance
 app = Flask(__name__)
@@ -30,7 +33,8 @@ app.secret_key = "qwerty" #token_urlsafe(16)
 csrf = CSRFProtect(app)
 
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:3984@localhost:3307/users_database"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:3984@localhost:3307/users_database"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://remote:Password1#@192.168.0.25/user_database"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -165,6 +169,32 @@ def update(id):
 @app.route('/delete/<int:id>')
 def delete(id):
     user_to_delete=Users.query.get_or_404(id)
+
+
+
+@app.route('/download')
+def download():
+    return send_from_directory('static', path="images/galaxy.png", as_attachment=True)
+
+
+class TradeForm(FlaskForm):
+    ticker = StringField('Ticker')
+    submit = SubmitField()
+    
+    
+@app.route('/trading', methods=['POST', 'GET'])
+def recommendations():
+    form = TradeForm()
+    if request.method == 'POST':
+        # ticker = request.form.get('ticker')
+        ticker = form.ticker.data
+        analysis = trade_analysis(ticker)
+        return render_template('trade/recommendation.html', form=form, ticker=ticker, analysis=analysis)
+    return render_template('trade/recommendation.html', form=form)
+
+
+
+
 
 if __name__ == "__main__":
     if getenv('FLASK_ENV') == 'development':
