@@ -6,8 +6,8 @@
 
 
 {% block content %}
-<div class='box'>  
-    <table>
+<div class='container'>  
+    <table align="center">
         <tr>
           <td>  
             <form method="POST">
@@ -159,87 +159,90 @@
     </table>
 
   {% if ticker %}
-  <h2>{{ ticker }}</h2>
+  <h2><strong>{{ ticker }}</strong></h2>
 
-  <table border=2 id='rectable'>
+  <table class="table  table-secondary table-striped-columns">
     <thead>
-      <td>Interval</td>
-      <td>Recommendation</td>
-      <td>Number of BUY indicators</td>
-      <td>Number of SELL indicators</td>
-      <td>Number of Neutral Indicators</td>
+      <tr>
+        <th scope="col">Interval</td>
+        <th scope="col">Recommendation</td>
+        <th scope="col">BUY indicators</td>
+        <th scope="col">SELL indicators</td>
+        <th scope="col">Neutral Indicators</td>
+      </tr>
     </thead>
-    <tr>
-      <td>1 minute</td>
-      <td>{{ analysis['1m']['RECOMMENDATION'] }}</td>
-      <td>{{ analysis['1m']['BUY'] }}</td>
-      <td>{{ analysis['1m']['SELL'] }}</td>
-      <td>{{ analysis['1m']['NEUTRAL'] }}</td>
-    </tr>
-    <tr>
-      <td>5 minute</td>
-      <td>{{ analysis['5m']['RECOMMENDATION'] }}</td>
-      <td>{{ analysis['5m']['BUY'] }}</td>
-      <td>{{ analysis['5m']['SELL'] }}</td>
-      <td>{{ analysis['5m']['NEUTRAL'] }}</td>
-    </tr>
-    <tr>
-      <td>15 minute</td>
-      <td>{{ analysis['15m']['RECOMMENDATION'] }}</td>
-      <td>{{ analysis['15m']['BUY'] }}</td>
-      <td>{{ analysis['15m']['SELL'] }}</td>
-      <td>{{ analysis['15m']['NEUTRAL'] }}</td>
-    </tr>
-    <tr>
-      <td>30 minute</td>
-      <td>{{ analysis['30m']['RECOMMENDATION'] }}</td>
-      <td>{{ analysis['30m']['BUY'] }}</td>
-      <td>{{ analysis['30m']['SELL'] }}</td>
-      <td>{{ analysis['30m']['NEUTRAL'] }}</td>
-    </tr>
-    <tr>
-      <td>1 hour</td>
-      <td>{{ analysis['1h']['RECOMMENDATION'] }}</td>
-      <td>{{ analysis['1h']['BUY'] }}</td>
-      <td>{{ analysis['1h']['SELL'] }}</td>
-      <td>{{ analysis['1h']['NEUTRAL'] }}</td>
-    </tr>
-    <tr>
-      <td>2 hours</td>
-      <td>{{ analysis['2h']['RECOMMENDATION'] }}</td>
-      <td>{{ analysis['2h']['BUY'] }}</td>
-      <td>{{ analysis['2h']['SELL'] }}</td>
-      <td>{{ analysis['2h']['NEUTRAL'] }}</td>
-    </tr>
-    <tr>
-      <td>4 hours</td>
-      <td>{{ analysis['4h']['RECOMMENDATION'] }}</td>
-      <td>{{ analysis['4h']['BUY'] }}</td>
-      <td>{{ analysis['4h']['SELL'] }}</td>
-      <td>{{ analysis['4h']['NEUTRAL'] }}</td>
-    </tr>
-    <tr>
-      <td>1 day</td>
-      <td>{{ analysis['1d']['RECOMMENDATION'] }}</td>
-      <td>{{ analysis['1d']['BUY'] }}</td>
-      <td>{{ analysis['1d']['SELL'] }}</td>
-      <td>{{ analysis['1d']['NEUTRAL'] }}</td>
-    </tr>
-    <tr>
-      <td>1 week</td>
-      <td>{{ analysis['1W']['RECOMMENDATION'] }}</td>
-      <td>{{ analysis['1W']['BUY'] }}</td>
-      <td>{{ analysis['1W']['SELL'] }}</td>
-      <td>{{ analysis['1W']['NEUTRAL'] }}</td>
-    </tr>
-    <tr>
-      <td>1 month</td>
-      <td>{{ analysis['1M']['RECOMMENDATION'] }}</td>
-      <td>{{ analysis['1M']['BUY'] }}</td>
-      <td>{{ analysis['1M']['SELL'] }}</td>
-      <td>{{ analysis['1M']['NEUTRAL'] }}</td>
-    </tr>
-
+    <tbody>
+      <tr>
+        <th scope="row">1 minute</th>
+        <td>{{ analysis['1m']['RECOMMENDATION'] }}</td>
+        <td>{{ analysis['1m']['BUY'] }}</td>
+        <td>{{ analysis['1m']['SELL'] }}</td>
+        <td>{{ analysis['1m']['NEUTRAL'] }}</td>
+      </tr>
+      <tr>
+        <th scope="row">5 minute</th>
+        <td>{{ analysis['5m']['RECOMMENDATION'] }}</td>
+        <td>{{ analysis['5m']['BUY'] }}</td>
+        <td>{{ analysis['5m']['SELL'] }}</td>
+        <td>{{ analysis['5m']['NEUTRAL'] }}</td>
+      </tr>
+      <tr>
+        <th scope="row">15 minute</th>
+        <td>{{ analysis['15m']['RECOMMENDATION'] }}</td>
+        <td>{{ analysis['15m']['BUY'] }}</td>
+        <td>{{ analysis['15m']['SELL'] }}</td>
+        <td>{{ analysis['15m']['NEUTRAL'] }}</td>
+      </tr>
+      <tr>
+        <th scope="row">30 minute</th>
+        <td>{{ analysis['30m']['RECOMMENDATION'] }}</td>
+        <td>{{ analysis['30m']['BUY'] }}</td>
+        <td>{{ analysis['30m']['SELL'] }}</td>
+        <td>{{ analysis['30m']['NEUTRAL'] }}</td>
+      </tr>
+      <tr>
+        <th scope="row">1 hour</th>
+        <td>{{ analysis['1h']['RECOMMENDATION'] }}</td>
+        <td>{{ analysis['1h']['BUY'] }}</td>
+        <td>{{ analysis['1h']['SELL'] }}</td>
+        <td>{{ analysis['1h']['NEUTRAL'] }}</td>
+      </tr>
+      <tr>
+        <th scope="row">2 hours</th>
+        <td>{{ analysis['2h']['RECOMMENDATION'] }}</td>
+        <td>{{ analysis['2h']['BUY'] }}</td>
+        <td>{{ analysis['2h']['SELL'] }}</td>
+        <td>{{ analysis['2h']['NEUTRAL'] }}</td>
+      </tr>
+      <tr>
+        <th scope="row">4 hours</th>
+        <td>{{ analysis['4h']['RECOMMENDATION'] }}</td>
+        <td>{{ analysis['4h']['BUY'] }}</td>
+        <td>{{ analysis['4h']['SELL'] }}</td>
+        <td>{{ analysis['4h']['NEUTRAL'] }}</td>
+      </tr>
+      <tr>
+        <th scope="row">1 day</th>
+        <td>{{ analysis['1d']['RECOMMENDATION'] }}</td>
+        <td>{{ analysis['1d']['BUY'] }}</td>
+        <td>{{ analysis['1d']['SELL'] }}</td>
+        <td>{{ analysis['1d']['NEUTRAL'] }}</td>
+      </tr>
+      <tr>
+        <th scope="row">1 week</th>
+        <td>{{ analysis['1W']['RECOMMENDATION'] }}</td>
+        <td>{{ analysis['1W']['BUY'] }}</td>
+        <td>{{ analysis['1W']['SELL'] }}</td>
+        <td>{{ analysis['1W']['NEUTRAL'] }}</td>
+      </tr>
+      <tr>
+        <th scope="row">1 month</th>
+        <td>{{ analysis['1M']['RECOMMENDATION'] }}</td>
+        <td>{{ analysis['1M']['BUY'] }}</td>
+        <td>{{ analysis['1M']['SELL'] }}</td>
+        <td>{{ analysis['1M']['NEUTRAL'] }}</td>
+      </tr>
+    </tbody>
   </table>
   
   {% endif %}

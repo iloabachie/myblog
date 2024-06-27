@@ -29,7 +29,7 @@ create_and_verify_db('user_database')
 # Create a Flask Instance
 app = Flask(__name__)
 
-app.secret_key = "qwerty" #token_urlsafe(16)
+app.secret_key = token_urlsafe(16)
 csrf = CSRFProtect(app)
 
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
@@ -181,7 +181,7 @@ class TradeForm(FlaskForm):
     ticker = StringField('Ticker')
     submit = SubmitField()
     
-    
+
 @app.route('/trading', methods=['POST', 'GET'])
 def recommendations():
     form = TradeForm()
@@ -191,8 +191,6 @@ def recommendations():
         analysis = trade_analysis(ticker)
         return render_template('trade/recommendation.html', form=form, ticker=ticker, analysis=analysis)
     return render_template('trade/recommendation.html', form=form)
-
-
 
 
 
