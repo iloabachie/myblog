@@ -7,10 +7,7 @@
             {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        
     {% endfor %}
-
-    <h2>Blog Add User Page</h2>
 
     {% if user_exists %}
         <h3>User already exists in database</h3>
@@ -20,7 +17,7 @@
         <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
         <h3>Add User</h3>
         <br/>
-        <form method="POST">
+        <form action="{{ url_for('add_user') }}" method="POST">
             {{ form.hidden_tag() }}
             {{ form.name.label(class="form-label") }}
             {{ form.name(class="form-control") }}
@@ -37,6 +34,8 @@
     {% endif %}
 
     {% if user_exists or name %}
+        <a href="{{ url_for('add_user') }}" class="btn btn-primary">Add more</a>
+        <br/>
         <br/>
         <table class="table table-hover table-bordered table-striped">
             <thead>
@@ -56,12 +55,12 @@
     <br/>
     <table class="table table-hover table-bordered table-striped">
         <thead>
-            <td><strong>ID</strong></td><td><strong>Name</strong></td><td><strong>Email</strong></td><td><strong>Location</strong></td><td><strong>Date added</strong></td>
+            <td><strong>ID</strong></td><td><strong>Name</strong></td><td><strong>Email</strong></td><td><strong>Location</strong></td><td><strong>Date added</strong></td><td><strong>Action</strong></td>
         </thead>
         <tbody>
     {% for item in items_on_page %}
         <tr>
-            <td>{{ item.id }}</td><td><a href="{{ url_for('update', id=item.id) }}">{{ item.name }}</a></td><td>{{ item.email }}</td><td>{{ item.location }}</td><td>{{ item.date_added }}</td>
+            <td>{{ item.id }}</td><td><a href="{{ url_for('update', id=item.id) }}">{{ item.name }}</a></td><td>{{ item.email }}</td><td>{{ item.location }}</td><td>{{ item.date_added }}</td><td><a href="{{ url_for('delete', id=item.id) }}">Delete</a></td>
         </tr> 
     {% endfor %}
         </tbody>

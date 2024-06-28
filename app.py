@@ -28,7 +28,7 @@ create_and_verify_db('user_database')
 
 # Create a Flask Instance
 app = Flask(__name__)
-
+per_page = 7
 app.secret_key = token_urlsafe(16)
 csrf = CSRFProtect(app)
 
@@ -125,7 +125,7 @@ def add_user():
     for user in user_list:
         all_users.append(user)
     page = request.args.get('page', 1, type=int)
-    per_page = 5
+    # per_page = 5
     start = (page - 1) * per_page
     end = start + per_page
     total_pages = (len(all_users) + per_page - 1) // per_page
@@ -141,7 +141,7 @@ def update(id):
     for user in user_list:
         all_users.append(user)
     page = request.args.get('page', 1, type=int)
-    per_page = 5
+    # per_page = 5
     start = (page - 1) * per_page
     end = start + per_page
     total_pages = (len(all_users) + per_page - 1) // per_page
@@ -164,11 +164,46 @@ def update(id):
             flash("Error in update. Try again")
             return render_template("update.html", form=form, name_to_update=name_to_update, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
     else:
-        return render_template("update.html", form=form, name_to_update=name_to_update, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
+        return render_template("update.html", form=form, id=id, name_to_update=name_to_update, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
 
 @app.route('/delete/<int:id>')
 def delete(id):
-    user_to_delete=Users.query.get_or_404(id)
+    user_to_delete = Users.query.get_or_404(id)
+    name = None   
+    try:
+        db.session.delete(user_to_delete)
+        db.session.commit()
+        flash("User deleted successfully !!!")
+        form = NamerForm()  
+        user_list = Users.query.order_by(Users.date_added)
+        all_users = []
+        for user in user_list:
+            all_users.append(user)
+        page = request.args.get('page', 1, type=int)
+        # per_page = 5
+        start = (page - 1) * per_page
+        end = start + per_page
+        total_pages = (len(all_users) + per_page - 1) // per_page
+        items_on_page = all_users[start:end]
+        return render_template("add_user.html", form=form, name=name, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
+    except Exception as e:
+        print(e)
+        flash(f"Error in deletion: {e}")
+        name = None
+        user_exists = False
+        form = NamerForm()  
+        user_list = Users.query.order_by(Users.date_added)
+        all_users = []
+        for user in user_list:
+            all_users.append(user)
+        page = request.args.get('page', 1, type=int)
+        # per_page = 5
+        start = (page - 1) * per_page
+        end = start + per_page
+        total_pages = (len(all_users) + per_page - 1) // per_page
+        items_on_page = all_users[start:end]
+        return render_template('add_user.html', name=name, form=form, user_list=user_list, user_exists=user_exists, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
+
 
 
 

@@ -12,7 +12,7 @@
     {% if name %}
         <h1>Hello {{ name|title }}</h1>
         <br/>
-        <img src="{{ url_for('static', filename='images/IMG-2023.jpg') }}" width=500>
+        <img src="{{ url_for('static', filename='images/IMG-2023.jpg') }}" class="img-fluid">
         <br/><br/>
         <p id='demo'>this is stuff before javascript</p>
         <script src="{{ url_for('static', filename='js/script.js') }}"></script>
