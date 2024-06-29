@@ -66,6 +66,18 @@ class NamerForm(FlaskForm):
     location = StringField('What is your location')
     submit = SubmitField('Submit')
 
+
+# import faker
+
+# fake = faker.Faker()
+
+# for _ in range(100):
+#     user = Users(name=fake.name(), email=fake.email(), location=fake.address())
+#     db.session.add(user)
+#     db.session.commit()
+    
+    
+    
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
@@ -132,7 +144,6 @@ def add_user():
     items_on_page = all_users[start:end]
         
     return render_template('add_user.html', name=name, form=form, user_list=user_list, user_exists=user_exists, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
-
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
@@ -204,19 +215,14 @@ def delete(id):
         items_on_page = all_users[start:end]
         return render_template('add_user.html', name=name, form=form, user_list=user_list, user_exists=user_exists, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
 
-
-
-
 @app.route('/download')
 def download():
     return send_from_directory('static', path="images/galaxy.png", as_attachment=True)
-
 
 class TradeForm(FlaskForm):
     ticker = StringField('Ticker')
     submit = SubmitField()
     
-
 @app.route('/trading', methods=['POST', 'GET'])
 def recommendations():
     form = TradeForm()
@@ -227,7 +233,9 @@ def recommendations():
         return render_template('trade/recommendation.html', form=form, ticker=ticker, analysis=analysis)
     return render_template('trade/recommendation.html', form=form)
 
-
+@app.route('/widget')
+def widget():
+    return render_template('trade/widget.html')
 
 if __name__ == "__main__":
     if getenv('FLASK_ENV') == 'development':
