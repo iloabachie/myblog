@@ -165,7 +165,8 @@
   {% if ticker %}
   <br/>
   <h2 class="fs-2 text-body-secondary"><strong>{{ ticker }}</strong></h2>
-
+  <h5>{{ time_stamp[:19] + ' UTC' }}</h5>
+  Download Recommendation Table: <a href={{ url_for('download')}}>txt</a> | <a href='#'>csv</a><br/><br/>
   <table class="table table-secondary table-striped-columns">
     <thead>
       <tr>
