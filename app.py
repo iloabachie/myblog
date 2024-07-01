@@ -1,4 +1,5 @@
 from os import getenv
+import csv
 from flask import Flask, render_template, flash, request, redirect, send_from_directory
 from secrets import token_urlsafe
 from flask_wtf import CSRFProtect, FlaskForm
@@ -83,6 +84,9 @@ def inject_defaults():
 
 @app.route('/')
 def index():
+    with open(getenv('LOG_FILE'), 'a') as file:
+        visitor_ip = request.remote_addr
+        file.write(f"Home Page:    {visitor_ip} - {datetime.utcnow()}\n")
     pizza = ['asss', 'bdddd', 'cffff', 'dggggg']
     return render_template('index.html', pizza=pizza)
 
@@ -203,9 +207,13 @@ def delete(id):
         items_on_page = all_users[start:end]
         return render_template('add_user.html', name=name, form=form, user_list=user_list, user_exists=user_exists, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
 
-@app.route('/trading/download')
+@app.route('/trading/download_txt')
 def download():
     return send_from_directory('downloads', path="recommendation.txt", as_attachment=True)
+
+@app.route('/trading/download_csv')
+def download_csv():
+    return send_from_directory('downloads', path="recommendation.csv", as_attachment=True)
 
 class TradeForm(FlaskForm):
     ticker = StringField('Ticker')
@@ -213,6 +221,9 @@ class TradeForm(FlaskForm):
     
 @app.route('/trading', methods=['POST', 'GET'])
 def recommendations():
+    with open(getenv('LOG_FILE'), 'a') as file:
+        visitor_ip = request.remote_addr
+        file.write(f"Trading Page: {visitor_ip} - {datetime.utcnow()}\n")
     form = TradeForm()
     if request.method == 'POST':
         # ticker = request.form.get('ticker')
@@ -236,6 +247,11 @@ def recommendations():
                     file.write(f'| {str(analysis[interval][col]):14} ')
                 file.write('|\n')
                 file.write(("+" + "-" * 16) * 5 + "+\n")  
+        with open("./downloads/recommendation.csv", 'w', newline="\n") as file:
+            writer = csv.writer(file)
+            writer.writerow(['INTERVAL'] + columns)
+            for interval in intervals:
+                writer.writerow([interval] + [str(analysis[interval][col]) for col in columns])
             
         return render_template('trade/recommendation.html', form=form, ticker=ticker, time_stamp=time_stamp, analysis=analysis)
     return render_template('trade/recommendation.html', form=form)
