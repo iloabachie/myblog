@@ -65,17 +65,6 @@ class NamerForm(FlaskForm):
     hidden_field = HiddenField('Hidden Field')
     location = StringField('What is your location')
     submit = SubmitField('Submit')
-
-
-# import faker
-
-# fake = faker.Faker()
-
-# for _ in range(100):
-#     user = Users(name=fake.name(), email=fake.email(), location=fake.address())
-#     db.session.add(user)
-#     db.session.commit()
-    
     
     
 @app.errorhandler(404)
@@ -92,7 +81,6 @@ def inject_defaults():
     company_name = "MyBlog"
     return dict(default_year=default_year, company_name=company_name)
 
-# Create a route decorator
 @app.route('/')
 def index():
     pizza = ['asss', 'bdddd', 'cffff', 'dggggg']
@@ -237,9 +225,10 @@ def recommendations():
 def widget():
     return render_template('trade/widget.html')
 
+
 if __name__ == "__main__":
     if getenv('FLASK_ENV') == 'development':
-        app.run(debug=True) # for dev testing
+        app.run(host='0.0.0.0', debug=True, port=5000)
     else:
-        app.run(host='0.0.0.0', port=5000) # For production
+        app.run()
         
