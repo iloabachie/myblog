@@ -29,7 +29,7 @@ create_and_verify_db('user_database')
 # Create a Flask Instance
 app = Flask(__name__)
 per_page = 7
-app.secret_key = token_urlsafe(16)
+app.secret_key = "random secret" # token_urlsafe(16)
 csrf = CSRFProtect(app)
 
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
