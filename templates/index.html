@@ -2,24 +2,23 @@
 
 {% block content %}
 
-<details> 
-    <summary>hello world</summary> 
-    <p>hi hello</p> 
-</details> 
-<details> 
-    <summary>hello world</summary> 
-    <p>hi hello</p> 
-</details> 
-<summary>hello world</summary> 
+<h2>Hello World</h2>
+
+Blog Site under construction<br/>
+
+<img src="{{ url_for('static', filename='images/image.png') }}" class="img-fluid">
+<hr>
+<summary>Designed with Python and Flask</summary> 
+
+
+
 <p><a href="{{ url_for('index', content=300) }}">Test link</a></p>
 
 
-{{ pizza }}<br>
-{{ pizza.2 }}<br>
-{% for item in pizza|reverse %}
-    {{ item|reverse }}<br>
-{% endfor %}
-
+<details> 
+    <summary>Here We Go</summary> 
+    <p>Learning whie Constructing Blog Site... Stay tuned</p> 
+</details> 
 <br/>
 
 
