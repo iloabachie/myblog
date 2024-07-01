@@ -226,7 +226,7 @@ def recommendations():
             file.write('TimeStamp (UTC): ' + time_stamp + '\n')
             file.write(("+" + "=" * 16) * 5 + "+\n")
             for _ in range(1):
-                file.write(f'| {'INTERVAL':14} ')
+                file.write(f"| {'INTERVAL':14} ")
                 for col in columns:
                     file.write(f'| {col:14} ')
                 file.write('|\n')
