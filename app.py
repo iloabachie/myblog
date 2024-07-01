@@ -13,7 +13,7 @@ from trading.trade_analysis import trade_analysis
 
 # create MySQL database
 # def create_and_verify_db(db_name, user='root', host='localhost', passwd="3984", port=3306):
-def create_and_verify_db(db_name, user='remote', host='192.168.0.25', passwd="Password1#", port=3306):
+def create_and_verify_db(db_name, user=getenv('DBUSER'), host=getenv('DBHOST'), passwd=getenv('DBPASSWD'), port=3306):
     mydb = mysql.connector.connect(host=host, user=user, passwd=passwd, port=port)
     my_cursor = mydb.cursor()    
     my_cursor.execute("SHOW DATABASES")
@@ -34,7 +34,7 @@ csrf = CSRFProtect(app)
 
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 # app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:3984@localhost:3307/users_database"
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://remote:Password1#@192.168.0.25/user_database"
+app.config["SQLALCHEMY_DATABASE_URI"] = getenv('MYSQLDB') 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
