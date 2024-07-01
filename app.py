@@ -223,13 +223,12 @@ def recommendations():
         columns = ['RECOMMENDATION', 'BUY', 'SELL', 'NEUTRAL']
         with open('./downloads/recommendation.txt', 'w') as file:
             file.write("Trading recommendation for " + ticker[:3] + '/' + ticker[3:] + '\n')
-            file.write('TimeStamp (UTC): ' + time_stamp + '\n')
-            file.write(("+" + "=" * 16) * 5 + "+\n")
-            for _ in range(1):
-                file.write(f"| {'INTERVAL':14} ")
-                for col in columns:
-                    file.write(f'| {col:14} ')
-                file.write('|\n')
+            file.write('Time Stamp (UTC): ' + time_stamp + '\n')
+            file.write(("+" + "=" * 16) * 5 + "+\n")            
+            file.write(f"| {'INTERVAL':14} ")
+            for col in columns:
+                file.write(f'| {col:14} ')
+            file.write('|\n')
             file.write(("+" + "=" * 16) * 5 + "+\n")
             for interval in intervals:
                 file.write(f'| {interval:14} ')
