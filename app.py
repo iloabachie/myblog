@@ -84,7 +84,7 @@ def inject_defaults():
 
 @app.route('/')
 def index():
-    with open(getenv('LOG_FILE'), 'a') as file:
+    with open('./logs/log_file.txt', 'a') as file:
         visitor_ip = request.remote_addr
         file.write(f"Home Page:    {visitor_ip} - {datetime.utcnow()}\n")
     pizza = ['asss', 'bdddd', 'cffff', 'dggggg']
@@ -221,7 +221,7 @@ class TradeForm(FlaskForm):
     
 @app.route('/trading', methods=['POST', 'GET'])
 def recommendations():
-    with open(getenv('LOG_FILE'), 'a') as file:
+    with open('./logs/log_file.txt', 'a') as file:
         visitor_ip = request.remote_addr
         file.write(f"Trading Page: {visitor_ip} - {datetime.utcnow()}\n")
     form = TradeForm()
