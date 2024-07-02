@@ -228,8 +228,8 @@ def recommendations():
     if request.method == 'POST':
         # ticker = request.form.get('ticker')
         ticker = form.ticker.data
-        time_stamp = str(datetime.utcnow())
         analysis = trade_analysis(ticker)
+        time_stamp = str(datetime.utcnow())
         intervals = ['1m', '5m', '15m', '30m', '1h', '2h', '4h', '1d', '1W', '1M']
         columns = ['RECOMMENDATION', 'BUY', 'SELL', 'NEUTRAL']
         with open('./downloads/recommendation.txt', 'w') as file:
@@ -249,9 +249,11 @@ def recommendations():
                 file.write(("+" + "-" * 16) * 5 + "+\n")  
         with open("./downloads/recommendation.csv", 'w', newline="\n") as file:
             writer = csv.writer(file)
-            writer.writerow(['INTERVAL'] + columns)
+            writer.writerow(['INTERVAL', 'DATE', 'TIME'] + columns)
+            date = time_stamp[:10]
+            time = time_stamp[11:19]
             for interval in intervals:
-                writer.writerow([interval] + [str(analysis[interval][col]) for col in columns])
+                writer.writerow([interval, date, time] + [str(analysis[interval][col]) for col in columns])
             
         return render_template('trade/recommendation.html', form=form, ticker=ticker, time_stamp=time_stamp, analysis=analysis)
     return render_template('trade/recommendation.html', form=form)
