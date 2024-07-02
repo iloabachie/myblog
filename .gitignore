@@ -4,4 +4,4 @@ instance/
 __pycache__/
 *.db
 logs/
-download/*.*
+download/
