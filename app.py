@@ -232,7 +232,7 @@ def recommendations():
         time_stamp = str(datetime.utcnow())
         intervals = ['1m', '5m', '15m', '30m', '1h', '2h', '4h', '1d', '1W', '1M']
         columns = ['RECOMMENDATION', 'BUY', 'SELL', 'NEUTRAL']
-        with open('./downloads/recommendation.txt', 'w') as file:
+        with open(f'./downloads/{ticker} {time_stamp.replace(':', '.')}.txt', 'w') as file:
             file.write("Trading recommendation for " + ticker[:3] + '/' + ticker[3:] + '\n')
             file.write('Time Stamp (UTC): ' + time_stamp + '\n')
             file.write(("+" + "=" * 16) * 5 + "+\n")            
@@ -247,7 +247,7 @@ def recommendations():
                     file.write(f'| {str(analysis[interval][col]):14} ')
                 file.write('|\n')
                 file.write(("+" + "-" * 16) * 5 + "+\n")  
-        with open("./downloads/recommendation.csv", 'w', newline="\n") as file:
+        with open(f'./downloads/{ticker}:{time_stamp.replace(':', '.')}.csv', 'w', newline="\n") as file:
             writer = csv.writer(file)
             writer.writerow(['INTERVAL', 'DATE', 'TIME'] + columns)
             date = time_stamp[:10]
