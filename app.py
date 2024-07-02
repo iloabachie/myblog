@@ -247,7 +247,7 @@ def recommendations():
                     file.write(f'| {str(analysis[interval][col]):14} ')
                 file.write('|\n')
                 file.write(("+" + "-" * 16) * 5 + "+\n")  
-        with open(f'./downloads/{ticker}:{time_stamp.replace(':', '.')}.csv', 'w', newline="\n") as file:
+        with open(f'./downloads/{ticker} {time_stamp.replace(':', '.')}.csv', 'w', newline="\n") as file:
             writer = csv.writer(file)
             writer.writerow(['INTERVAL', 'DATE', 'TIME'] + columns)
             date = time_stamp[:10]
