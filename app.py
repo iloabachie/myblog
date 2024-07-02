@@ -207,13 +207,13 @@ def delete(id):
         items_on_page = all_users[start:end]
         return render_template('add_user.html', name=name, form=form, user_list=user_list, user_exists=user_exists, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
 
-@app.route('/trading/download_txt')
-def download():
-    return send_from_directory('downloads', path="recommendation.txt", as_attachment=True)
+@app.route('/trading/download/<filename>')
+def download(filename):
+    return send_from_directory('downloads', path=filename, as_attachment=True)
 
-@app.route('/trading/download_csv')
-def download_csv():
-    return send_from_directory('downloads', path="recommendation.csv", as_attachment=True)
+@app.route('/trading/download/<filename>')
+def download_csv(filename):
+    return send_from_directory('downloads', path=filename, as_attachment=True)
 
 class TradeForm(FlaskForm):
     ticker = StringField('Ticker')
@@ -232,7 +232,8 @@ def recommendations():
         time_stamp = str(datetime.utcnow())
         intervals = ['1m', '5m', '15m', '30m', '1h', '2h', '4h', '1d', '1W', '1M']
         columns = ['RECOMMENDATION', 'BUY', 'SELL', 'NEUTRAL']
-        with open(f"./downloads/{ticker} {time_stamp.replace(':', '.')}.txt", 'w') as file:
+        filename = f"{ticker} {time_stamp.replace(':', '.')}"
+        with open(f"./downloads/{filename}.txt", 'w') as file:
             file.write("Trading recommendation for " + ticker[:3] + '/' + ticker[3:] + '\n')
             file.write('Time Stamp (UTC): ' + time_stamp + '\n')
             file.write(("+" + "=" * 16) * 5 + "+\n")            
@@ -247,7 +248,7 @@ def recommendations():
                     file.write(f'| {str(analysis[interval][col]):14} ')
                 file.write('|\n')
                 file.write(("+" + "-" * 16) * 5 + "+\n")  
-        with open(f"./downloads/{ticker} {time_stamp.replace(':', '.')}.csv", 'w', newline="\n") as file:
+        with open(f"./downloads/{filename}.csv", 'w', newline="\n") as file:
             writer = csv.writer(file)
             writer.writerow(['INTERVAL', 'DATE', 'TIME'] + columns)
             date = time_stamp[:10]
@@ -255,7 +256,7 @@ def recommendations():
             for interval in intervals:
                 writer.writerow([interval, date, time] + [str(analysis[interval][col]) for col in columns])
             
-        return render_template('trade/recommendation.html', form=form, ticker=ticker, time_stamp=time_stamp, analysis=analysis)
+        return render_template('trade/recommendation.html', form=form, ticker=ticker, time_stamp=time_stamp, analysis=analysis, filename=filename)
     return render_template('trade/recommendation.html', form=form)
 
 @app.route('/widget')
