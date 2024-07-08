@@ -2,14 +2,15 @@ from os import getenv
 import csv
 from flask import Flask, render_template, flash, request, redirect, send_from_directory
 from secrets import token_urlsafe
-from flask_wtf import CSRFProtect, FlaskForm
-from wtforms import StringField, SubmitField, HiddenField
-from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime, date
 import mysql.connector
 from trading.trade_analysis import trade_analysis
+import json
+from werkzeug.security import generate_password_hash, check_password_hash 
+from wtf_forms import *
+from db_models import *
 
 
 # create MySQL database
@@ -33,6 +34,7 @@ per_page = 7
 app.secret_key = "random secret" # token_urlsafe(16)
 csrf = CSRFProtect(app)
 
+
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 # app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:3984@localhost:3307/users_database"
 app.config["SQLALCHEMY_DATABASE_URI"] = getenv('MYSQLDB') 
@@ -47,6 +49,18 @@ class Users(db.Model):
     email = db.Column(db.String(120), nullable=False, unique=True)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
     location = db.Column(db.String(120))
+    password_hash = db.Column(db.String(128))
+    
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute')
+    
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+    
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
     
     def __repr__(self):
         return f'{self.name}'
@@ -59,13 +73,6 @@ def create_table():
 # Example: Run the create_tables function when the script is executed
 if __name__ == '__main__':
     create_table()
-
-class NamerForm(FlaskForm):
-    name = StringField('What is your name', validators=[DataRequired()])
-    email = StringField('What is your email', validators=[DataRequired()])
-    hidden_field = HiddenField('Hidden Field')
-    location = StringField('What is your location')
-    submit = SubmitField('Submit')
     
     
 @app.errorhandler(404)
@@ -190,7 +197,6 @@ def delete(id):
         items_on_page = all_users[start:end]
         return render_template("add_user.html", form=form, name=name, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
     except Exception as e:
-        print(e)
         flash(f"Error in deletion: {e}")
         name = None
         user_exists = False
@@ -207,6 +213,17 @@ def delete(id):
         items_on_page = all_users[start:end]
         return render_template('add_user.html', name=name, form=form, user_list=user_list, user_exists=user_exists, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
 
+
+# @app.route('/trading/download/<filename>')
+# def testxxx(filename):
+#     print(request.args.get('filename'))
+#     analysis = request.args.get('analysis')
+#     print(1, analysis, type(analysis))
+#     analysis = json.loads(analysis)
+#     print(2, analysis, type(analysis))
+#     return render_template('textxxx.html', analysis=analysis, filename=filename)
+
+
 @app.route('/trading/download/<filename>')
 def download(filename):
     return send_from_directory('downloads', path=filename, as_attachment=True)
@@ -215,10 +232,43 @@ def download(filename):
 def download_csv(filename):
     return send_from_directory('downloads', path=filename, as_attachment=True)
 
-class TradeForm(FlaskForm):
-    ticker = StringField('Ticker')
-    submit = SubmitField()
-    
+@app.route('/trading/download/<filename>')
+def download_pdf(filename):
+    # analysis = json.loads(request.args.get('analysis'))
+    # ticker = filename[:6]
+    # time_stamp = filename[8:].replace('.', ':')
+    # intervals = ['1m', '5m', '15m', '30m', '1h', '2h', '4h', '1d', '1W', '1M']
+    # columns = ['RECOMMENDATION', 'BUY', 'SELL', 'NEUTRAL']
+    # filename = f"{ticker} {time_stamp.replace(':', '.')}"
+    # with open(f"./downloads/{filename}.txt", 'w') as file:
+    #     file.write("Trading recommendation for " + ticker[:3] + '/' + ticker[3:] + '\n')
+    #     file.write('Time Stamp (UTC): ' + time_stamp + '\n')
+    #     file.write(("+" + "=" * 16) * 5 + "+\n")            
+    #     file.write(f"| {'INTERVAL':14} ")
+    #     for col in columns:
+    #         file.write(f'| {col:14} ')
+    #     file.write('|\n')
+    #     file.write(("+" + "=" * 16) * 5 + "+\n")
+    #     for interval in intervals:
+    #         file.write(f'| {interval:14} ')
+    #         for col in columns:
+    #             file.write(f'| {str(analysis[interval][col]):14} ')
+    #         file.write('|\n')
+    #         file.write(("+" + "-" * 16) * 5 + "+\n")  
+    # with open(f"./downloads/{filename}.csv", 'w', newline="\n") as file:
+    #     writer = csv.writer(file)
+    #     writer.writerow(['INTERVAL', 'DATE', 'TIME'] + columns)
+    #     date = time_stamp[:10]
+    #     time = time_stamp[11:19]
+    #     for interval in intervals:
+    #         writer.writerow([interval, date, time] + [str(analysis[interval][col]) for col in columns])
+    return send_from_directory('downloads', path=filename, as_attachment=True)
+
+
+# for passing in functions to jinja but did not work.
+def dict_to_str(dictionary):
+    return json.dumps(dictionary)
+
 @app.route('/trading', methods=['POST', 'GET'])
 def recommendations():
     with open(getenv('LOG_FILE'), 'a') as file:
@@ -256,7 +306,7 @@ def recommendations():
             for interval in intervals:
                 writer.writerow([interval, date, time] + [str(analysis[interval][col]) for col in columns])
             
-        return render_template('trade/recommendation.html', form=form, ticker=ticker, time_stamp=time_stamp, analysis=analysis, filename=filename)
+        return render_template('trade/recommendation.html', dict_to_str=dict_to_str, form=form, ticker=ticker, time_stamp=time_stamp, analysis=analysis, filename=filename)
     return render_template('trade/recommendation.html', form=form)
 
 @app.route('/widget')

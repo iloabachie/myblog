@@ -166,15 +166,24 @@
   <br/>
   <h2 class="fs-2 text-body-secondary"><strong>{{ ticker }}</strong></h2>
   <h5>{{ time_stamp[:19] + ' UTC' }}</h5>
-  Download Recommendation: <a href={{ url_for('download', filename=filename + '.txt') }}>txt</a> | <a href={{ url_for('download_csv', filename=filename + '.csv') }}>csv</a> | <a href='#'>pdf</a><br/><br/>
+  Download Recommendation: 
+  <a href="{{ url_for('download', filename=filename+'.txt') }}">txt</a> | 
+  <a href="{{ url_for('download_csv', filename=filename+'.csv') }}">csv</a> | 
+  {#
+  <a href="{{ url_for('download_pdf', filename=filename, analysis=dict_to_str(analysis)) }}">pdf</a>   
+  <a href="{{ url_for('testxxx', filename=filename+'.csv', analysis=dict_to_str(analysis)) }}">xxx</a>
+  <a href="/trading/download/{{ filename }}?analysis={{ dict_to_str(analysis) }}">pdf</a>
+  #}
+  
+  <br/><br/>
   <table class="table table-secondary table-striped-columns">
     <thead>
       <tr>
-        <th scope="col">Interval</td>
-        <th scope="col">Recommendation</td>
-        <th scope="col">BUY indicators</td>
-        <th scope="col">SELL indicators</td>
-        <th scope="col">Neutral Indicators</td>
+        <th scope="col">Interval</th>
+        <th scope="col">Recommendation</th>
+        <th scope="col">BUY indicators</th>
+        <th scope="col">SELL indicators</th>
+        <th scope="col">Neutral Indicators</th>
       </tr>
     </thead>
     <tbody>
@@ -256,3 +265,4 @@
 </div>
 <br/>
 {% endblock %}
+
