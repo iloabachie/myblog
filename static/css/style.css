@@ -29,3 +29,8 @@ footer {
     color: white;
     text-align: center;
 }
+
+.overflow {
+    overflow-x:auto; 
+    overflow-y:auto;
+}
