@@ -12,12 +12,13 @@ body {
     color: rgb(146, 52, 52);
 }
 
+
 /* nav {
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
-} */
+}  */
 
 footer {
     position: fixed;
@@ -27,4 +28,4 @@ footer {
     background-color: #43658b;
     color: white;
     text-align: center;
-  }
+}

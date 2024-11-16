@@ -1,12 +1,13 @@
 {% extends "base.html" %} 
 
 {% block content %}
-    <div class="container">
+    <div class="container-fluid" style="height:800px;">
         <!-- TradingView Widget BEGIN -->
-        <div class="tradingview-widget-container" style="height:90%;width:90%">
-            <div id="tradingview_ba8bc" style="height:calc(100% - 32px);width:100%"></div>
+        <div class="tradingview-widget-container" style="height:100%;width:90%">
+            <div id="tradingview_ba8bc" style="height:calc(100% - 100px);width:100%"></div>
             <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
             <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+            
             <script type="text/javascript">
             new TradingView.widget(
             {
@@ -30,6 +31,7 @@
             }
             );
             </script>
+            
         </div>
         <!-- TradingView Widget END -->
     </div>

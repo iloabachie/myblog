@@ -5,7 +5,7 @@ from secrets import token_urlsafe
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime, date
-import mysql.connector
+import mysql.connector 
 from trading.trade_analysis import trade_analysis
 import json
 from werkzeug.security import generate_password_hash, check_password_hash 
@@ -140,9 +140,17 @@ def add_user():
     start = (page - 1) * per_page
     end = start + per_page
     total_pages = (len(all_users) + per_page - 1) // per_page
-    items_on_page = all_users[start:end]
-        
-    return render_template('add_user.html', name=name, form=form, user_list=user_list, user_exists=user_exists, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
+    items_on_page = all_users[start:end]        
+    return render_template(
+        'add_user.html', 
+        name=name, form=form, 
+        user_list=user_list, 
+        user_exists=user_exists, 
+        all_users=all_users, 
+        items_on_page=items_on_page, 
+        page=page, 
+        total_pages=total_pages
+        )
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
@@ -169,12 +177,39 @@ def update(id):
             form.name.data = ''
             form.email.data = '' 
             form.location.data = '' 
-            return render_template('add_user.html', name=None, user_exists=None, form=form, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
+            return render_template('add_user.html', 
+                name=None, 
+                user_exists=None, 
+                form=form, 
+                user_list=user_list, 
+                all_users=all_users, 
+                items_on_page=items_on_page, 
+                page=page, 
+                total_pages=total_pages
+                )
         except Exception as e:
             flash("Error in update. Try again")
-            return render_template("update.html", form=form, name_to_update=name_to_update, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
+            return render_template(
+                "update.html", 
+                form=form, 
+                name_to_update=name_to_update, 
+                user_list=user_list, 
+                all_users=all_users, 
+                items_on_page=items_on_page, 
+                page=page, 
+                total_pages=total_pages
+                )
     else:
-        return render_template("update.html", form=form, id=id, name_to_update=name_to_update, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
+        return render_template(
+            "update.html", 
+            form=form, id=id, 
+            name_to_update=name_to_update, 
+            user_list=user_list, 
+            all_users=all_users, 
+            items_on_page=items_on_page, 
+            page=page, 
+            total_pages=total_pages
+            )
 
 @app.route('/delete/<int:id>')
 def delete(id):
@@ -195,7 +230,16 @@ def delete(id):
         end = start + per_page
         total_pages = (len(all_users) + per_page - 1) // per_page
         items_on_page = all_users[start:end]
-        return render_template("add_user.html", form=form, name=name, user_list=user_list, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
+        return render_template(
+            "add_user.html", 
+            form=form, 
+            name=name, 
+            user_list=user_list, 
+            all_users=all_users, 
+            items_on_page=items_on_page, 
+            page=page, 
+            total_pages=total_pages
+            )
     except Exception as e:
         flash(f"Error in deletion: {e}")
         name = None
@@ -211,7 +255,17 @@ def delete(id):
         end = start + per_page
         total_pages = (len(all_users) + per_page - 1) // per_page
         items_on_page = all_users[start:end]
-        return render_template('add_user.html', name=name, form=form, user_list=user_list, user_exists=user_exists, all_users=all_users, items_on_page=items_on_page, page=page, total_pages=total_pages)
+        return render_template(
+            'add_user.html', 
+            name=name, 
+            form=form, 
+            user_list=user_list, 
+            user_exists=user_exists, 
+            all_users=all_users, 
+            items_on_page=items_on_page, 
+            page=page, 
+            total_pages=total_pages
+            )
 
 
 # @app.route('/trading/download/<filename>')
@@ -306,7 +360,15 @@ def recommendations():
             for interval in intervals:
                 writer.writerow([interval, date, time] + [str(analysis[interval][col]) for col in columns])
             
-        return render_template('trade/recommendation.html', dict_to_str=dict_to_str, form=form, ticker=ticker, time_stamp=time_stamp, analysis=analysis, filename=filename)
+        return render_template(
+            'trade/recommendation.html', 
+            dict_to_str=dict_to_str, 
+            form=form, 
+            ticker=ticker, 
+            time_stamp=time_stamp, 
+            analysis=analysis, 
+            filename=filename
+            )
     return render_template('trade/recommendation.html', form=form)
 
 @app.route('/widget')
