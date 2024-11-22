@@ -1,6 +1,6 @@
 from secrets import token_urlsafe
 from flask_wtf import CSRFProtect, FlaskForm
-from wtforms import StringField, SubmitField, HiddenField, PasswordField
+from wtforms import StringField, SubmitField, HiddenField, PasswordField, SelectField
 from wtforms.validators import DataRequired
 
 
@@ -20,4 +20,22 @@ class TradeForm(FlaskForm):
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+    
+class DropdownForm(FlaskForm):
+    # Dropdown field
+    options = SelectField(
+        'Choose a database',
+        choices=[
+            (False, 'Create a new database'),
+            ('option2', 'Option 2'),
+            ('option3', 'Option 3'),
+        ],
+        validators=[DataRequired()],
+    )
+    submit = SubmitField('Submit')
+
+
+class DropdownForm2(FlaskForm):
+    options = SelectField('Choose a database', validators=[DataRequired()])
     submit = SubmitField('Submit')

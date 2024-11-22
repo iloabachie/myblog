@@ -8,311 +8,311 @@
 
 {% block content %}
 <div class='container'>  
-  <a href="{{ url_for('widget') }}" class="btn btn-primary">Trading Chart</a>
-  <br/>
-  <br/>
+    <a href="{{ url_for('widget') }}" class="btn btn-primary">Trading Chart</a>
+    <br/>
+    <br/>
     <table align="center">
         <tr>
-          <td>  
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="EURUSD", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="EURUSD") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="EURGBP", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="EURGBP") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="EURJPY", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="EURJPY") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="EURCHF", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="EURCHF") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="EURAUD", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="EURAUD") }}
-            </form>
-          </td>
+            <td>  
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="EURUSD", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="EURUSD") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="EURGBP", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="EURGBP") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="EURJPY", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="EURJPY") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="EURCHF", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="EURCHF") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="EURAUD", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="EURAUD") }}
+                </form>
+            </td>
         </tr>
         <tr>
-          <td>  
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="EURCAD", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="EURCAD") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="USDJPY", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="USDJPY") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="USDCAD", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="USDCAD") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="USDCHF", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="USDCHF") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="GBPUSD", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="GBPUSD") }}
-            </form>
-          </td>
+            <td>  
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="EURCAD", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="EURCAD") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="USDJPY", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="USDJPY") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="USDCAD", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="USDCAD") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="USDCHF", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="USDCHF") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="GBPUSD", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="GBPUSD") }}
+                </form>
+            </td>
         </tr>
         <tr>
-          <td>  
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="GBPJPY", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="GBPJPY") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="GBPCAD", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="GBPCAD") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="CADCHF", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="CADCHF") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="CHFJPY", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="CHFJPY") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="AUDUSD", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="AUDUSD") }}
-            </form>
-          </td>
+            <td>  
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="GBPJPY", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="GBPJPY") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="GBPCAD", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="GBPCAD") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="CADCHF", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="CADCHF") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="CHFJPY", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="CHFJPY") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="AUDUSD", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="AUDUSD") }}
+                </form>
+            </td>
         </tr>
         <tr>
-          <td>  
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="AUDCAD", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="AUDCAD") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="AUDJPY", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="AUDJPY") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="AUDCHF", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="AUDCHF") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="NZDJPY", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="NZDJPY") }}
-            </form>
-          </td>
-          <td>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              {{ form.ticker(value="EURJPY", hidden=True) }}
-              {{ form.submit(class="btn btn-secondary", value="NaN") }}
-            </form>
-          </td>
+            <td>  
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="AUDCAD", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="AUDCAD") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="AUDJPY", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="AUDJPY") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="AUDCHF", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="AUDCHF") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="NZDJPY", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="NZDJPY") }}
+                </form>
+            </td>
+            <td>
+                <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.ticker(value="EURJPY", hidden=True) }}
+                {{ form.submit(class="btn btn-secondary w-100", value="NaN") }}
+                </form>
+            </td>
         </tr>
     </table>
 
-  {% if ticker %}
-  <br/>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm">
+    {% if ticker %}
+    <br/>
+    <div class="container-fluid">
+        <div class="row">
+        <div class="col-sm">
 
-              <h2 class="fs-2 text-body-secondary" id="symbol"><strong>{{ ticker }}</strong></h2>
-              <h5>{{ time_stamp[:19] + ' UTC' }}</h5>
-              Download Recommendation: 
-              <a href="{{ url_for('download', filename=filename+'.txt') }}">txt</a> | 
-              <a href="{{ url_for('download_csv', filename=filename+'.csv') }}">csv</a> | 
-              {#
-              <a href="{{ url_for('download_pdf', filename=filename, analysis=dict_to_str(analysis)) }}">pdf</a>   
-              <a href="{{ url_for('testxxx', filename=filename+'.csv', analysis=dict_to_str(analysis)) }}">xxx</a>
-              <a href="/trading/download/{{ filename }}?analysis={{ dict_to_str(analysis) }}">pdf</a>
-              #}
-              
-              <br/><br/>
-              <div class="container overflow">
-              <table class="table table-secondary table-striped-columns">
-                <thead>
-                  <tr>
-                    <th scope="col">Interval</th>
-                    <th scope="col">Recommendation</th>
-                    <th scope="col">BUY indicators</th>
-                    <th scope="col">SELL indicators</th>
-                    <th scope="col">Neutral Indicators</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1 minute</th>
-                    <td>{{ analysis['1m']['RECOMMENDATION'] }}</td>
-                    <td>{{ analysis['1m']['BUY'] }}</td>
-                    <td>{{ analysis['1m']['SELL'] }}</td>
-                    <td>{{ analysis['1m']['NEUTRAL'] }}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5 minute</th>
-                    <td>{{ analysis['5m']['RECOMMENDATION'] }}</td>
-                    <td>{{ analysis['5m']['BUY'] }}</td>
-                    <td>{{ analysis['5m']['SELL'] }}</td>
-                    <td>{{ analysis['5m']['NEUTRAL'] }}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">15 minute</th>
-                    <td>{{ analysis['15m']['RECOMMENDATION'] }}</td>
-                    <td>{{ analysis['15m']['BUY'] }}</td>
-                    <td>{{ analysis['15m']['SELL'] }}</td>
-                    <td>{{ analysis['15m']['NEUTRAL'] }}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">30 minute</th>
-                    <td>{{ analysis['30m']['RECOMMENDATION'] }}</td>
-                    <td>{{ analysis['30m']['BUY'] }}</td>
-                    <td>{{ analysis['30m']['SELL'] }}</td>
-                    <td>{{ analysis['30m']['NEUTRAL'] }}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1 hour</th>
-                    <td>{{ analysis['1h']['RECOMMENDATION'] }}</td>
-                    <td>{{ analysis['1h']['BUY'] }}</td>
-                    <td>{{ analysis['1h']['SELL'] }}</td>
-                    <td>{{ analysis['1h']['NEUTRAL'] }}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2 hours</th>
-                    <td>{{ analysis['2h']['RECOMMENDATION'] }}</td>
-                    <td>{{ analysis['2h']['BUY'] }}</td>
-                    <td>{{ analysis['2h']['SELL'] }}</td>
-                    <td>{{ analysis['2h']['NEUTRAL'] }}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4 hours</th>
-                    <td>{{ analysis['4h']['RECOMMENDATION'] }}</td>
-                    <td>{{ analysis['4h']['BUY'] }}</td>
-                    <td>{{ analysis['4h']['SELL'] }}</td>
-                    <td>{{ analysis['4h']['NEUTRAL'] }}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1 day</th>
-                    <td>{{ analysis['1d']['RECOMMENDATION'] }}</td>
-                    <td>{{ analysis['1d']['BUY'] }}</td>
-                    <td>{{ analysis['1d']['SELL'] }}</td>
-                    <td>{{ analysis['1d']['NEUTRAL'] }}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1 week</th>
-                    <td>{{ analysis['1W']['RECOMMENDATION'] }}</td>
-                    <td>{{ analysis['1W']['BUY'] }}</td>
-                    <td>{{ analysis['1W']['SELL'] }}</td>
-                    <td>{{ analysis['1W']['NEUTRAL'] }}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1 month</th>
-                    <td>{{ analysis['1M']['RECOMMENDATION'] }}</td>
-                    <td>{{ analysis['1M']['BUY'] }}</td>
-                    <td>{{ analysis['1M']['SELL'] }}</td>
-                    <td>{{ analysis['1M']['NEUTRAL'] }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-      </div>
-      <div class="col-sm">
-        <br/>
-        <div class="container-fluid" style="height:800px;width:100%">
-          <!-- TradingView Widget BEGIN -->
-          <div class="tradingview-widget-container" style="height:90%;width:100%">
-              <div id="tradingview_ba8bc" style="height:calc(100% - 100px);width:100%"></div>
-              <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
-              <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-
-              <script type="text/javascript">
-
-              function getValue() {
-                const symbol = document.querySelector('#symbol strong').innerText;
-                return symbol;
-              }
-
-              new TradingView.widget(
-              {
-              "autosize": true,
-              "symbol": "OANDA:" + getValue(),
-              "interval": "D",
-              "timezone": "Etc/UTC",
-              "theme": "dark",
-              "style": "1",
-              "locale": "en",
-              "enable_publishing": false,
-              "withdateranges": true,
-              "hide_side_toolbar": false,
-              "allow_symbol_change": true,
-              "studies": [
-              "STD;Bollinger_Bands",
-              "STD;SMA",
-              "STD;Stochastic"
-              ],
-              "container_id": "tradingview_ba8bc"
-              }
-              );
-              </script>
-          </div>
-          <!-- TradingView Widget END -->
+                <h2 class="fs-2 text-body-secondary" id="symbol"><strong>{{ ticker }}</strong></h2>
+                <h5>{{ time_stamp[:19] + ' UTC' }}</h5>
+                Download Recommendation: 
+                <a href="{{ url_for('download', filename=filename+'.txt') }}">txt</a> | 
+                <a href="{{ url_for('download_csv', filename=filename+'.csv') }}">csv</a> | 
+                {#
+                <a href="{{ url_for('download_pdf', filename=filename, analysis=dict_to_str(analysis)) }}">pdf</a>   
+                <a href="{{ url_for('testxxx', filename=filename+'.csv', analysis=dict_to_str(analysis)) }}">xxx</a>
+                <a href="/trading/download/{{ filename }}?analysis={{ dict_to_str(analysis) }}">pdf</a>
+                #}
+                
+                <br/><br/>
+                <div class="container overflow">
+                <table class="table table-secondary table-striped-columns">
+                    <thead>
+                    <tr>
+                        <th scope="col">Interval</th>
+                        <th scope="col">Recommendation</th>
+                        <th scope="col">BUY indicators</th>
+                        <th scope="col">SELL indicators</th>
+                        <th scope="col">Neutral Indicators</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1 minute</th>
+                        <td>{{ analysis['1m']['RECOMMENDATION'] }}</td>
+                        <td>{{ analysis['1m']['BUY'] }}</td>
+                        <td>{{ analysis['1m']['SELL'] }}</td>
+                        <td>{{ analysis['1m']['NEUTRAL'] }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5 minute</th>
+                        <td>{{ analysis['5m']['RECOMMENDATION'] }}</td>
+                        <td>{{ analysis['5m']['BUY'] }}</td>
+                        <td>{{ analysis['5m']['SELL'] }}</td>
+                        <td>{{ analysis['5m']['NEUTRAL'] }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">15 minute</th>
+                        <td>{{ analysis['15m']['RECOMMENDATION'] }}</td>
+                        <td>{{ analysis['15m']['BUY'] }}</td>
+                        <td>{{ analysis['15m']['SELL'] }}</td>
+                        <td>{{ analysis['15m']['NEUTRAL'] }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">30 minute</th>
+                        <td>{{ analysis['30m']['RECOMMENDATION'] }}</td>
+                        <td>{{ analysis['30m']['BUY'] }}</td>
+                        <td>{{ analysis['30m']['SELL'] }}</td>
+                        <td>{{ analysis['30m']['NEUTRAL'] }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1 hour</th>
+                        <td>{{ analysis['1h']['RECOMMENDATION'] }}</td>
+                        <td>{{ analysis['1h']['BUY'] }}</td>
+                        <td>{{ analysis['1h']['SELL'] }}</td>
+                        <td>{{ analysis['1h']['NEUTRAL'] }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2 hours</th>
+                        <td>{{ analysis['2h']['RECOMMENDATION'] }}</td>
+                        <td>{{ analysis['2h']['BUY'] }}</td>
+                        <td>{{ analysis['2h']['SELL'] }}</td>
+                        <td>{{ analysis['2h']['NEUTRAL'] }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4 hours</th>
+                        <td>{{ analysis['4h']['RECOMMENDATION'] }}</td>
+                        <td>{{ analysis['4h']['BUY'] }}</td>
+                        <td>{{ analysis['4h']['SELL'] }}</td>
+                        <td>{{ analysis['4h']['NEUTRAL'] }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1 day</th>
+                        <td>{{ analysis['1d']['RECOMMENDATION'] }}</td>
+                        <td>{{ analysis['1d']['BUY'] }}</td>
+                        <td>{{ analysis['1d']['SELL'] }}</td>
+                        <td>{{ analysis['1d']['NEUTRAL'] }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1 week</th>
+                        <td>{{ analysis['1W']['RECOMMENDATION'] }}</td>
+                        <td>{{ analysis['1W']['BUY'] }}</td>
+                        <td>{{ analysis['1W']['SELL'] }}</td>
+                        <td>{{ analysis['1W']['NEUTRAL'] }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1 month</th>
+                        <td>{{ analysis['1M']['RECOMMENDATION'] }}</td>
+                        <td>{{ analysis['1M']['BUY'] }}</td>
+                        <td>{{ analysis['1M']['SELL'] }}</td>
+                        <td>{{ analysis['1M']['NEUTRAL'] }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
         </div>
+        <div class="col-sm">
+            <br/>
+            <div class="container-fluid" style="height:800px;width:100%">
+            <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container" style="height:90%;width:100%">
+                <div id="tradingview_ba8bc" style="height:calc(100% - 100px);width:100%"></div>
+                <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 
-      </div>
+                <script type="text/javascript">
+
+                function getValue() {
+                    const symbol = document.querySelector('#symbol strong').innerText;
+                    return symbol;
+                }
+
+                new TradingView.widget(
+                {
+                "autosize": true,
+                "symbol": "OANDA:" + getValue(),
+                "interval": "D",
+                "timezone": "Etc/UTC",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "enable_publishing": false,
+                "withdateranges": true,
+                "hide_side_toolbar": false,
+                "allow_symbol_change": true,
+                "studies": [
+                "STD;Bollinger_Bands",
+                "STD;SMA",
+                "STD;Stochastic"
+                ],
+                "container_id": "tradingview_ba8bc"
+                }
+                );
+                </script>
+            </div>
+            <!-- TradingView Widget END -->
+            </div>
+
+        </div>
+        </div>
     </div>
-  </div>
-  
-  {% endif %}
+    
+    {% endif %}
   
 </div>
 <br/>

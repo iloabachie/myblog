@@ -1,6 +1,6 @@
 from os import getenv
 import csv
-from flask import Flask, render_template, flash, request, redirect, send_from_directory
+from flask import Flask, render_template, flash, request, redirect, send_from_directory, url_for
 from secrets import token_urlsafe
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -10,7 +10,6 @@ from trading.trade_analysis import trade_analysis
 import json
 from werkzeug.security import generate_password_hash, check_password_hash 
 from wtf_forms import *
-from db_models import *
 
 
 # create MySQL database
@@ -143,7 +142,8 @@ def add_user():
     items_on_page = all_users[start:end]        
     return render_template(
         'add_user.html', 
-        name=name, form=form, 
+        name=name, 
+        form=form, 
         user_list=user_list, 
         user_exists=user_exists, 
         all_users=all_users, 
@@ -202,7 +202,8 @@ def update(id):
     else:
         return render_template(
             "update.html", 
-            form=form, id=id, 
+            form=form, 
+            id=id, 
             name_to_update=name_to_update, 
             user_list=user_list, 
             all_users=all_users, 
@@ -273,7 +274,7 @@ def delete(id):
 #     print(request.args.get('filename'))
 #     analysis = request.args.get('analysis')
 #     print(1, analysis, type(analysis))
-#     analysis = json.loads(analysis)
+#     analysis = json.loads(analysis) 
 #     print(2, analysis, type(analysis))
 #     return render_template('textxxx.html', analysis=analysis, filename=filename)
 
@@ -376,9 +377,25 @@ def widget():
     return render_template('trade/widget.html')
 
 
+@app.route('/dropdown', methods=['GET', 'POST'])
+def dropdown():
+    form = DropdownForm()
+    if form.validate_on_submit():
+        selected_option = form.options.data
+        flash(f"You selected: {selected_option}", "success")
+        return redirect(url_for('dropdown'))
+    return render_template('dropdown.html', form=form)
+
+@app.route('/dropdown2')
+def dropdown2():
+    form = DropdownForm2()
+    # Dynamically set choices
+    form.options.choices = [('option1', 'Option 1'), ('option2', 'Option 2')]
+    return render_template('dropdown.html', form=form)
+
 if __name__ == "__main__":
     if getenv('FLASK_ENV') == 'development':
-        app.run(host='0.0.0.0', debug=True, port=5000)
+        app.run(host='0.0.0.0', debug=True, port=5500)
     else:
         app.run()
         
