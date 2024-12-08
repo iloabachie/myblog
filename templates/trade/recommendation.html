@@ -172,12 +172,7 @@
                 <h5>{{ time_stamp[:19] + ' UTC' }}</h5>
                 Download Recommendation: 
                 <a href="{{ url_for('download', filename=filename+'.txt') }}">txt</a> | 
-                <a href="{{ url_for('download_csv', filename=filename+'.csv') }}">csv</a> | 
-                {#
-                <a href="{{ url_for('download_pdf', filename=filename, analysis=dict_to_str(analysis)) }}">pdf</a>   
-                <a href="{{ url_for('testxxx', filename=filename+'.csv', analysis=dict_to_str(analysis)) }}">xxx</a>
-                <a href="/trading/download/{{ filename }}?analysis={{ dict_to_str(analysis) }}">pdf</a>
-                #}
+                <a href="{{ url_for('download_csv', filename=filename+'.csv') }}">csv</a>
                 
                 <br/><br/>
                 <div class="container overflow">

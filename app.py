@@ -93,23 +93,7 @@ def index():
     with open(getenv('LOG_FILE'), 'a') as file:
         visitor_ip = request.remote_addr
         file.write(f"Home Page:    {visitor_ip} - {datetime.utcnow()}\n")
-    pizza = ['asss', 'bdddd', 'cffff', 'dggggg']
-    return render_template('index.html', pizza=pizza)
-
-@app.route('/user/<name>')
-def user(name):
-    return render_template('user.html', name=name)
-
-@app.route('/name', methods=['GET', 'POST'])
-def name():
-    name = None
-    form = NamerForm()
-    if form.validate_on_submit():
-        name = form.name.data
-        form.name.data = ''
-        form.email.data = '' 
-        flash("Form Submitted Successfully!!!")
-    return render_template('name.html', name=name, form=form)
+    return render_template('index.html')
 
 @app.route('/user/add', methods=['GET', 'POST'])
 def add_user():
@@ -269,16 +253,6 @@ def delete(id):
             )
 
 
-# @app.route('/trading/download/<filename>')
-# def testxxx(filename):
-#     print(request.args.get('filename'))
-#     analysis = request.args.get('analysis')
-#     print(1, analysis, type(analysis))
-#     analysis = json.loads(analysis) 
-#     print(2, analysis, type(analysis))
-#     return render_template('textxxx.html', analysis=analysis, filename=filename)
-
-
 @app.route('/trading/download/<filename>')
 def download(filename):
     return send_from_directory('downloads', path=filename, as_attachment=True)
@@ -287,40 +261,6 @@ def download(filename):
 def download_csv(filename):
     return send_from_directory('downloads', path=filename, as_attachment=True)
 
-@app.route('/trading/download/<filename>')
-def download_pdf(filename):
-    # analysis = json.loads(request.args.get('analysis'))
-    # ticker = filename[:6]
-    # time_stamp = filename[8:].replace('.', ':')
-    # intervals = ['1m', '5m', '15m', '30m', '1h', '2h', '4h', '1d', '1W', '1M']
-    # columns = ['RECOMMENDATION', 'BUY', 'SELL', 'NEUTRAL']
-    # filename = f"{ticker} {time_stamp.replace(':', '.')}"
-    # with open(f"./downloads/{filename}.txt", 'w') as file:
-    #     file.write("Trading recommendation for " + ticker[:3] + '/' + ticker[3:] + '\n')
-    #     file.write('Time Stamp (UTC): ' + time_stamp + '\n')
-    #     file.write(("+" + "=" * 16) * 5 + "+\n")            
-    #     file.write(f"| {'INTERVAL':14} ")
-    #     for col in columns:
-    #         file.write(f'| {col:14} ')
-    #     file.write('|\n')
-    #     file.write(("+" + "=" * 16) * 5 + "+\n")
-    #     for interval in intervals:
-    #         file.write(f'| {interval:14} ')
-    #         for col in columns:
-    #             file.write(f'| {str(analysis[interval][col]):14} ')
-    #         file.write('|\n')
-    #         file.write(("+" + "-" * 16) * 5 + "+\n")  
-    # with open(f"./downloads/{filename}.csv", 'w', newline="\n") as file:
-    #     writer = csv.writer(file)
-    #     writer.writerow(['INTERVAL', 'DATE', 'TIME'] + columns)
-    #     date = time_stamp[:10]
-    #     time = time_stamp[11:19]
-    #     for interval in intervals:
-    #         writer.writerow([interval, date, time] + [str(analysis[interval][col]) for col in columns])
-    return send_from_directory('downloads', path=filename, as_attachment=True)
-
-
-# for passing in functions to jinja but did not work.
 def dict_to_str(dictionary):
     return json.dumps(dictionary)
 
@@ -377,21 +317,7 @@ def widget():
     return render_template('trade/widget.html')
 
 
-@app.route('/dropdown', methods=['GET', 'POST'])
-def dropdown():
-    form = DropdownForm()
-    if form.validate_on_submit():
-        selected_option = form.options.data
-        flash(f"You selected: {selected_option}", "success")
-        return redirect(url_for('dropdown'))
-    return render_template('dropdown.html', form=form)
 
-@app.route('/dropdown2')
-def dropdown2():
-    form = DropdownForm2()
-    # Dynamically set choices
-    form.options.choices = [('option1', 'Option 1'), ('option2', 'Option 2')]
-    return render_template('dropdown.html', form=form)
 
 if __name__ == "__main__":
     if getenv('FLASK_ENV') == 'development':
