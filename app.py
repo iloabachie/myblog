@@ -85,7 +85,7 @@ def server_error(e):
 @app.context_processor
 def inject_defaults():
     default_year = date.today()
-    company_name = "MyBlog"
+    company_name = "MyWeb"
     return dict(default_year=default_year, company_name=company_name)
 
 @app.route('/')
@@ -315,9 +315,6 @@ def recommendations():
 @app.route('/widget')
 def widget():
     return render_template('trade/widget.html')
-
-
-
 
 if __name__ == "__main__":
     if getenv('FLASK_ENV') == 'development':
