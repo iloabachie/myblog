@@ -1,4 +1,5 @@
 from os import getenv
+import os
 import csv
 from flask import Flask, render_template, flash, request, redirect, send_from_directory, url_for
 from secrets import token_urlsafe
@@ -266,12 +267,16 @@ def dict_to_str(dictionary):
 
 @app.route('/trading', methods=['POST', 'GET'])
 def recommendations():
+    folder_name = "downloads"
+    if not os.path.exists("downloads"): 
+        os.makedirs(folder_name)
+        
     with open(getenv('LOG_FILE'), 'a') as file:
         visitor_ip = request.remote_addr
         file.write(f"Trading Page: {visitor_ip} - {datetime.utcnow()}\n")
+        
     form = TradeForm()
     if request.method == 'POST':
-        # ticker = request.form.get('ticker')
         ticker = form.ticker.data
         analysis = trade_analysis(ticker)
         time_stamp = str(datetime.utcnow())

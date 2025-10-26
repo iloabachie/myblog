@@ -7,16 +7,18 @@ SYMBOLS = ['EURUSD', 'EURGBP', 'EURJPY', 'EURCHF', 'EURAUD', 'EURCAD', 'USDJPY',
 
 def trade_analysis(symbol, screener='forex', exchange='FX_IDC'):
     global INTERVAL
-    INTERVAL = [Interval.INTERVAL_1_MINUTE, 
-                Interval.INTERVAL_5_MINUTES, 
-                Interval.INTERVAL_15_MINUTES, 
-                Interval.INTERVAL_30_MINUTES, 
-                Interval.INTERVAL_1_HOUR, 
-                Interval.INTERVAL_2_HOURS, 
-                Interval.INTERVAL_4_HOURS, 
-                Interval.INTERVAL_1_DAY, 
-                Interval.INTERVAL_1_WEEK, 
-                Interval.INTERVAL_1_MONTH]
+    INTERVAL = [
+        Interval.INTERVAL_1_MINUTE, 
+        Interval.INTERVAL_5_MINUTES, 
+        Interval.INTERVAL_15_MINUTES, 
+        Interval.INTERVAL_30_MINUTES, 
+        Interval.INTERVAL_1_HOUR, 
+        Interval.INTERVAL_2_HOURS, 
+        Interval.INTERVAL_4_HOURS, 
+        Interval.INTERVAL_1_DAY, 
+        Interval.INTERVAL_1_WEEK, 
+        Interval.INTERVAL_1_MONTH
+        ]
 
     recommendations = dict()
 
