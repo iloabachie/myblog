@@ -26,7 +26,7 @@ def create_and_verify_db(db_name, user=getenv('DBUSER'), host=getenv('DBHOST'), 
         my_cursor.execute(f"CREATE DATABASE {db_name}")        
 
 # create_and_verify_db('users_database', port=3307)
-create_and_verify_db('user_database')
+# create_and_verify_db('user_database')
 
 # Create a Flask Instance
 app = Flask(__name__)
@@ -35,9 +35,9 @@ app.secret_key = "random secret" # token_urlsafe(16)
 csrf = CSRFProtect(app)
 
 
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 # app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:3984@localhost:3307/users_database"
-app.config["SQLALCHEMY_DATABASE_URI"] = getenv('MYSQLDB') 
+# app.config["SQLALCHEMY_DATABASE_URI"] = getenv('MYSQLDB') 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
